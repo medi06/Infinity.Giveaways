@@ -1,0 +1,1896 @@
+<!DOCTYPE html>
+<html lang="sq">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PronaMix - Shtëpi në Shitje</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+       
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --accent: #e74c3c;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+            --gray: #95a5a6;
+            --success: #2ecc71;
+        }
+       
+        body {
+            background-color: #f9f9f9;
+            color: #333;
+            line-height: 1.6;
+        }
+       
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+       
+        /* Header Styles */
+        header {
+            background-color: var(--primary);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+       
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+       
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: white;
+            text-decoration: none;
+        }
+       
+        .logo span {
+            color: var(--secondary);
+        }
+       
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+       
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+       
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+       
+        nav ul li a:hover {
+            color: var(--secondary);
+        }
+       
+        .mobile-menu {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+       
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1560518883-ce09059eeffa?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 5rem 0;
+            text-align: center;
+        }
+       
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+       
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+        }
+       
+        .search-box {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            max-width: 800px;
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+       
+        .search-box select, .search-box input {
+            flex: 1;
+            min-width: 150px;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+       
+        .search-btn {
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background 0.3s;
+        }
+       
+        .search-btn:hover {
+            background: #c0392b;
+        }
+       
+        /* Advanced Search */
+        .advanced-search {
+            background: var(--light);
+            padding: 2rem 0;
+            display: none;
+        }
+       
+        .advanced-search.active {
+            display: block;
+        }
+       
+        .advanced-search h3 {
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+       
+        .advanced-filters {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+       
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+        }
+       
+        .filter-group label {
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--primary);
+        }
+       
+        .filter-group input, .filter-group select {
+            padding: 0.7rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+       
+        .toggle-advanced {
+            background: none;
+            border: none;
+            color: var(--secondary);
+            cursor: pointer;
+            margin-top: 1rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+       
+        /* Results Info */
+        .results-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 2rem 0 1rem;
+            padding: 1rem;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+       
+        .sort-options select {
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+       
+        /* Featured Properties */
+        .section-title {
+            text-align: center;
+            margin: 3rem 0 2rem;
+            color: var(--primary);
+            position: relative;
+        }
+       
+        .section-title:after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 3px;
+            background: var(--secondary);
+            margin: 0.5rem auto;
+        }
+       
+        .properties-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+       
+        .property-card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+        }
+       
+        .property-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+        }
+       
+        .property-badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: var(--accent);
+            color: white;
+            padding: 0.3rem 0.7rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+       
+        .property-img-container {
+            position: relative;
+        }
+       
+        .property-img {
+            height: 200px;
+            width: 100%;
+            object-fit: cover;
+        }
+       
+        .property-info {
+            padding: 1.5rem;
+        }
+       
+        .property-price {
+            color: var(--accent);
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+       
+        .property-title {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+       
+        .property-location {
+            color: var(--gray);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+        }
+       
+        .property-location i {
+            margin-right: 0.5rem;
+        }
+       
+        .property-features {
+            display: flex;
+            justify-content: space-between;
+            border-top: 1px solid #eee;
+            padding-top: 1rem;
+            color: var(--gray);
+        }
+       
+        .no-results {
+            text-align: center;
+            padding: 3rem;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            grid-column: 1 / -1;
+        }
+       
+        /* Pagination */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin: 3rem 0;
+            gap: 0.5rem;
+        }
+       
+        .pagination button {
+            padding: 0.7rem 1rem;
+            border: 1px solid #ddd;
+            background: white;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+       
+        .pagination button.active {
+            background: var(--secondary);
+            color: white;
+            border-color: var(--secondary);
+        }
+       
+        .pagination button:hover:not(.active) {
+            background: var(--light);
+        }
+       
+        /* Property Details Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.8);
+            z-index: 1000;
+            overflow-y: auto;
+        }
+       
+        .modal-content {
+            background-color: white;
+            margin: 2rem auto;
+            width: 90%;
+            max-width: 1000px;
+            border-radius: 8px;
+            overflow: hidden;
+            animation: modalOpen 0.5s;
+        }
+       
+        @keyframes modalOpen {
+            from {opacity: 0; transform: translateY(-50px);}
+            to {opacity: 1; transform: translateY(0);}
+        }
+       
+        .modal-header {
+            position: relative;
+        }
+       
+        .modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: rgba(0,0,0,0.5);
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+       
+        .modal-img {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+        }
+       
+        .modal-body {
+            padding: 2rem;
+        }
+       
+        .modal-title {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+       
+        .modal-price {
+            font-size: 2rem;
+            color: var(--accent);
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
+       
+        .modal-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        /* Contact Section */
+        .contact-hero {
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1423666639041-f56000c27a9a?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 5rem 0;
+            text-align: center;
+        }
+
+        .contact-hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .contact-hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+        }
+
+        .contact-content {
+            padding: 3rem 0;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 3rem;
+        }
+
+        .contact-info {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+
+        .contact-info h2 {
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        .contact-info h2:after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 3px;
+            background: var(--secondary);
+            margin-top: 0.5rem;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .contact-icon {
+            background: var(--light);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            color: var(--secondary);
+            font-size: 1.5rem;
+        }
+
+        .contact-text h4 {
+            margin-bottom: 0.2rem;
+            color: var(--primary);
+        }
+
+        .contact-text p {
+            color: var(--gray);
+        }
+
+        .contact-form {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+
+        .contact-form h2 {
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        .contact-form h2:after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 3px;
+            background: var(--secondary);
+            margin-top: 0.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--primary);
+        }
+
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .submit-btn {
+            background: var(--secondary);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 4px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            font-size: 1.1rem;
+            transition: background 0.3s;
+        }
+
+        .submit-btn:hover {
+            background: #2980b9;
+        }
+       
+        .detail-item {
+            display: flex;
+            align-items: center;
+        }
+       
+        .detail-icon {
+            background: var(--light);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            color: var(--secondary);
+        }
+       
+        .detail-text h4 {
+            margin-bottom: 0.2rem;
+            color: var(--primary);
+        }
+       
+        .detail-text p {
+            color: var(--gray);
+        }
+       
+        .modal-description {
+            margin-bottom: 2rem;
+            line-height: 1.8;
+        }
+       
+        .modal-contact {
+            background: var(--light);
+            padding: 1.5rem;
+            border-radius: 8px;
+        }
+       
+        .contact-btn {
+            background: var(--secondary);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 4px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            font-size: 1.1rem;
+            transition: background 0.3s;
+        }
+       
+        .contact-btn:hover {
+            background: #2980b9;
+        }
+       
+        /* About Section */
+        .about {
+            padding: 3rem 0;
+        }
+       
+        .about-content {
+            display: flex;
+            align-items: flex-start;
+            gap: 3rem;
+        }
+       
+        .about-text {
+            flex: 1;
+        }
+       
+        .about-img {
+            flex: 1;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+       
+        .about-img img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+       
+        /* Accordion for About Section */
+        .accordion {
+            margin-top: 2rem;
+        }
+       
+        .accordion-item {
+            margin-bottom: 1rem;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+       
+        .accordion-header {
+            background: var(--primary);
+            color: white;
+            padding: 1.2rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.3s;
+        }
+       
+        .accordion-header:hover {
+            background: #1a252f;
+        }
+       
+        .accordion-header h3 {
+            margin: 0;
+            font-size: 1.2rem;
+        }
+       
+        .accordion-icon {
+            transition: transform 0.3s;
+        }
+       
+        .accordion-content {
+            background: white;
+            padding: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out, padding 0.3s ease-out;
+        }
+       
+        .accordion-content.active {
+            padding: 1.5rem;
+            max-height: 500px;
+        }
+       
+        .accordion-item.active .accordion-icon {
+            transform: rotate(180deg);
+        }
+       
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 3rem 0 1rem;
+        }
+       
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+       
+        .footer-column h3 {
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+       
+        .footer-column h3:after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 40px;
+            height: 2px;
+            background: var(--secondary);
+        }
+       
+        .footer-column ul {
+            list-style: none;
+        }
+       
+        .footer-column ul li {
+            margin-bottom: 0.8rem;
+        }
+       
+        .footer-column ul li a {
+            color: #ddd;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+       
+        .footer-column ul li a:hover {
+            color: var(--secondary);
+        }
+       
+        .copyright {
+            text-align: center;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+       
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+           
+            nav ul {
+                margin-top: 1rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+           
+            nav ul li {
+                margin: 0.5rem;
+            }
+           
+            .hero h1 {
+                font-size: 2rem;
+            }
+           
+            .search-box {
+                flex-direction: column;
+            }
+           
+            .about-content {
+                flex-direction: column;
+            }
+           
+            .mobile-menu {
+                display: block;
+                position: absolute;
+                top: 1rem;
+                right: 1rem;
+            }
+           
+            nav {
+                display: none;
+                width: 100%;
+                margin-top: 1rem;
+            }
+           
+            nav.active {
+                display: block;
+            }
+           
+            .modal-details {
+                grid-template-columns: 1fr;
+            }
+           
+            .results-info {
+                flex-direction: column;
+                gap: 1rem;
+                align-items: flex-start;
+            }
+        }
+        /* contact responsive tweaks */
+        @media (max-width: 768px) {
+            .contact-hero h1 {
+                font-size: 2rem;
+            }
+            .contact-content {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="#" class="logo">Prona<span>Mix</span></a>
+                <div class="mobile-menu">☰</div>
+                <nav>
+                    <ul>
+                        <li><a href="#">Kryefaqja</a></li>                    
+                        <li><a href="#about">Rreth Nesh</a></li>
+                        <li><a href="mailto:infopronamix@gmail.com?subject=PronaMix%20Contact" target="_blank" rel="noopener">Kontakt</a></li>
+                    </ul>
+                </nav>
+                <div class="auth-buttons">
+                    <button id="login-btn" style="margin-left:1rem;">Hyr</button>
+                    <button id="signup-btn" style="margin-left:0.5rem;">Regjistrohu</button>
+                    <button id="admin-panel-btn" style="margin-left:0.5rem; display:none;">Paneli Admin</button>
+                    <button id="logout-btn" style="margin-left:0.5rem; display:none;">Dil</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>Gjeni Shtëpinë Tuaj të Ëndrrave në Kosovë</h1>
+            <p>Eksploroni mbi 20 pronat më të mira në qytete të ndryshme të Kosovës me çmime konkurruese</p>
+           
+            <div class="search-box">
+                <select id="city-search">
+                    <option value="">Të gjitha qytetet</option>
+                    <option value="Prishtinë">Prishtinë</option>
+                    <option value="Prizren">Prizren</option>
+                    <option value="Ferizaj">Ferizaj</option>
+                    <option value="Gjilan">Gjilan</option>
+                    <option value="Mitrovicë">Mitrovicë</option>
+                    <option value="Pejë">Pejë</option>
+                    <option value="Gjakovë">Gjakovë</option>
+                </select>
+               
+                <select id="type-search">
+                    <option value="">Të gjitha llojet</option>
+                    <option value="Apartament">Apartament</option>
+                    <option value="Shtëpi">Shtëpi</option>
+                    <option value="Vilë">Vilë</option>
+                   
+                </select>
+               
+                <input type="number" id="price-search" placeholder="Çmimi Maksimal (€)">
+               
+                <button class="search-btn" id="search-btn">Kërko</button>
+            </div>
+           
+            <button class="toggle-advanced" id="toggle-advanced">
+                Kërkimi i Avancuar
+                <span>▼</span>
+            </button>
+        </div>
+    </section>
+
+    <!-- Advanced Search -->
+    <section class="advanced-search" id="advanced-search">
+        <div class="container">
+            <h3>Kërkimi i Avancuar</h3>
+            <div class="advanced-filters">
+                <div class="filter-group">
+                    <label for="rooms">Numri i dhomave</label>
+                    <select id="rooms">
+                        <option value="">Çdo numër</option>
+                        <option value="1">1 dhomë</option>
+                        <option value="2">2 dhoma</option>
+                        <option value="3">3 dhoma</option>
+                        <option value="4">4+ dhoma</option>
+                    </select>
+                </div>
+               
+                <div class="filter-group">
+                    <label for="bathrooms">Numri i banjove</label>
+                    <select id="bathrooms">
+                        <option value="">Çdo numër</option>
+                        <option value="1">1 banjo</option>
+                        <option value="2">2 banjo</option>
+                        <option value="3">3+ banjo</option>
+                    </select>
+                </div>
+               
+                <div class="filter-group">
+                    <label for="size-min">Siperfaqja minimale (m²)</label>
+                    <input type="number" id="size-min" placeholder="Min">
+                </div>
+               
+                <div class="filter-group">
+                    <label for="size-max">Siperfaqja maksimale (m²)</label>
+                    <input type="number" id="size-max" placeholder="Max">
+                </div>
+               
+                <div class="filter-group">
+                    <label for="year">Viti i ndërtimit</label>
+                    <select id="year">
+                        <option value="">Çdo vit</option>
+                        <option value="2020">Pas 2020</option>
+                        <option value="2015">Pas 2015</option>
+                        <option value="2010">Pas 2010</option>
+                        <option value="2000">Pas 2000</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Results Info -->
+    <section class="container">
+        <div class="results-info">
+            <div class="results-count">
+                <span id="results-count">24 prona u gjetën</span>
+            </div>
+            <div class="sort-options">
+                <select id="sort-by">
+                    <option value="default">Rendit sipas</option>
+                    <option value="price-asc">Çmimi: Nga më e ulët</option>
+                    <option value="price-desc">Çmimi: Nga më e lartë</option>
+                    <option value="size-asc">Siperfaqja: Nga më e vogël</option>
+                    <option value="size-desc">Siperfaqja: Nga më e madhe</option>
+                </select>
+            </div>
+        </div>
+       
+        <!-- Properties Grid -->
+        <div class="properties-grid" id="properties-grid">
+            <!-- Properties will be loaded here by JavaScript -->
+        </div>
+       
+        <!-- Pagination -->
+        <div class="pagination" id="pagination">
+            <!-- Pagination will be loaded here by JavaScript -->
+        </div>
+    </section>
+
+    <!-- Property Details Modals -->
+    <!-- Modals will be generated by JavaScript -->
+
+    <!-- About Section -->
+    <section class="about" id="about">
+        <div class="container">
+            <h2 class="section-title">Rreth Nesh</h2>
+           
+            <div class="about-content">
+                <div class="about-text">
+                    <p>PronaMix është platforma kryesore e pasurive të paluajtshme në Kosovë. Me më shumë se 10 vjet përvojë në treg, ne ofrojmë shërbime profesionale për shitjen dhe blerjen e pronave në të gjitha qytetet e Kosovës.</p>
+                   
+                    <div class="accordion">
+                        <div class="accordion-item">
+                            <div class="accordion-header">
+                                <h3>Historia Jonë</h3>
+                                <span class="accordion-icon">▼</span>
+                            </div>
+                            <div class="accordion-content">
+                                <p>PronaMix u themelua në vitin 2013 me qëllimin e ofrimit të shërbimeve të cilësisë së lartë në tregun e pasurive të paluajtshme në Kosovë. Gjatë këtyre viteve, kemi ndihmuar mijëra familje të gjejnë shtëpinë e ëndrrave të tyre.</p>
+                            </div>
+                        </div>
+                       
+                        <div class="accordion-item">
+                            <div class="accordion-header">
+                                <h3>Vizioni dhe Misioni</h3>
+                                <span class="accordion-icon">▼</span>
+                            </div>
+                            <div class="accordion-content">
+                                <p>Misioni ynë është të ofrojmë shërbime të besueshme dhe profesionale për klientët tanë, duke i ndihmuar ata të gjejnë pronën perfekte për nevojat e tyre. Vizioni ynë është të jemi lider në tregun e pasurive të paluajtshme në Kosovë.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="about-img">
+                    <img src="https://images.unsplash.com/photo-1560520653-9e0e4c89eb11?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" alt="Ekipi ynë">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <!-- Contact Section -->
+    <section id="contact" class="contact-hero">
+        <div class="container">
+            <h1>Contact Us</h1>
+            <p>Kontaktoni ekipin tonë për çdo informacion rreth pronave apo shërbimeve.</p>
+        </div>
+    </section>
+
+    <section class="container contact-content">
+        <div class="contact-info">
+            <h2>Lidhu me ne</h2>
+            <div class="contact-item">
+                <div class="contact-icon">📞</div>
+                <div class="contact-text">
+                    <h4>Phone</h4>
+                    <p>+383 45 643 303</p>
+                </div>
+            </div>
+            <div class="contact-item">
+                <div class="contact-icon">✉️</div>
+                <div class="contact-text">
+                    <h4>Email</h4>
+                    <p><a href="mailto:infopronamix@gmail.com?subject=PronaMix%20Contact">infopronamix@gmail.com</a></p>
+                </div>
+            </div>
+            <div class="contact-item">
+                <div class="contact-icon">📍</div>
+                <div class="contact-text">
+                    <h4>Address</h4>
+                    <p>Rr. Nëna Terezë, Prishtinë</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="contact-form">
+            <h2>Na shkruani</h2>
+            <form id="contact-form">
+                <div class="form-group">
+                    <label for="contact-name">Emri</label>
+                    <input id="contact-name" type="text" required>
+                </div>
+                <div class="form-group">
+                    <label for="contact-email">Email</label>
+                    <input id="contact-email" type="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="contact-message">Mesazhi</label>
+                    <textarea id="contact-message" required></textarea>
+                </div>
+                <button type="submit" class="submit-btn">Dërgo Mesazhin</button>
+                <p style="margin-top:0.5rem;text-align:center;color:#666;">Ose dërgoni email direkt: <a href="mailto:infopronamix@gmail.com?subject=PronaMix%20Contact">infopronamix@gmail.com</a></p>
+            </form>
+        </div>
+    </section>
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>PronaMix</h3>
+                    <p>Platforma kryesore e pasurive të paluajtshme në Kosovë. Gjeni shtëpinë tuaj të ëndrrave me ne.</p>
+                </div>
+               
+                <div class="footer-column">
+                    <h3>Lidhje të Shpejta</h3>
+                    <ul>
+                        <li><a href="#">Kryefaqja</a></li>
+                        <li><a href="#">Shtëpi në Shitje</a></li>
+                        <li><a href="#">Shtëpi me Qera</a></li>
+                        <li><a href="#about">Rreth Nesh</a></li>
+                        <li><a href="#">Kontakt</a></li>
+                    </ul>
+                </div>
+               
+                <div class="footer-column">
+                    <h3>Qytetet</h3>
+                    <ul>
+                        <li><a href="#" data-city="Prishtinë">Prishtinë</a></li>
+                        <li><a href="#" data-city="Prizren">Prizren</a></li>
+                        <li><a href="#" data-city="Ferizaj">Ferizaj</a></li>
+                        <li><a href="#" data-city="Gjilan">Gjilan</a></li>
+                        <li><a href="#" data-city="Mitrovicë">Mitrovicë</a></li>
+                    </ul>
+                </div>
+               
+                <div class="footer-column">
+                    <h3>Kontakt</h3>
+                    <ul>
+                        <li>📞 +383 44 123 456</li>
+                        <li>✉️ info@realestateks.com</li>
+                        <li>📍 Rr. Nëna Terezë, Prishtinë</li>
+                    </ul>
+                </div>
+            </div>
+           
+            <div class="copyright">
+                <p>&copy; 2025 PronaMix. Të gjitha të drejtat e rezervuara.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Entry choice modal -->
+    <div id="entry-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 style="padding:1rem;">Mirësevini në PronaMix</h2>
+            </div>
+            <div class="modal-body" style="padding:1.5rem; text-align:center;">
+                <p>Zgjidhni mënyrën e përdorimit:</p>
+                <div style="display:flex;gap:0.5rem;justify-content:center;margin-top:1rem;">
+                    <button id="entry-login" class="search-btn">Hyr</button>
+                    <button id="entry-signup" class="search-btn">Regjistrohu</button>
+                    <button id="entry-guest" class="search-btn">Vazhdoni si Vizitor</button>
+                </div>
+                <p style="margin-top:1rem;font-size:0.9rem;color:var(--gray);">Si vizitor, do të keni akses të kufizuar. Për funksionalitete të plota, krijoni llogari ose hyni.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Auth & Admin Modals -->
+    <div id="login-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 style="padding:1rem;">Hyr</h2>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="login-form">
+                    <div style="display:flex;flex-direction:column;gap:0.5rem;">
+                        <input id="login-email" type="email" placeholder="Email" required>
+                        <input id="login-password" type="password" placeholder="Fjalëkalimi" required>
+                        <button type="submit" class="search-btn">Hyr</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div id="signup-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 style="padding:1rem;">Regjistrohu</h2>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="signup-form">
+                    <div style="display:flex;flex-direction:column;gap:0.5rem;">
+                        <input id="signup-email" type="email" placeholder="Email" required>
+                        <input id="signup-password" type="password" placeholder="Fjalëkalimi" required>
+                        <input id="signup-password-confirm" type="password" placeholder="Përsërit fjalëkalimin" required>
+                        <button type="submit" class="search-btn">Krijo llogari</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div id="admin-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 style="padding:1rem;">Paneli i Administratorit</h2>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body" style="padding:1.5rem;">
+                <h3>Menaxho Përdoruesit</h3>
+                <div id="admin-users-list" style="margin-bottom:1rem;"></div>
+                <hr>
+                <h3>Shto / Menaxho Pronat</h3>
+                <form id="admin-add-property-form" style="display:grid;grid-template-columns:1fr 1fr;gap:0.5rem;align-items:center;">
+                    <input id="prop-title" placeholder="Titulli" required>
+                    <input id="prop-price" type="number" placeholder="Çmimi" required>
+                    <input id="prop-city" placeholder="Qyteti" required>
+                    <input id="prop-type" placeholder="Tipi (Apartament/Shtëpi/Vilë)" required>
+                    <input id="prop-rooms" type="number" placeholder="Dhoma" required>
+                    <input id="prop-bathrooms" type="number" placeholder="Banjove" required>
+                    <input id="prop-size" type="number" placeholder="Siperfaqe (m²)" required>
+                    <input id="prop-year" type="number" placeholder="Viti" required>
+                    <input id="prop-image" placeholder="URL e imazhit" required>
+                    <label style="display:flex;align-items:center;gap:0.5rem;"><input id="prop-featured" type="checkbox"> Featured</label>
+                    <div style="grid-column:1 / -1; text-align:right;">
+                        <button id="admin-add-prop-btn" class="search-btn" type="submit">Shto Prona</button>
+                    </div>
+                </form>
+                <div id="admin-properties-list" style="margin-top:1rem;"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Client-side auth + persistence helpers
+        async function hashPassword(password) {
+            if (window.crypto && crypto.subtle) {
+                const enc = new TextEncoder();
+                const buf = await crypto.subtle.digest('SHA-256', enc.encode(password));
+                return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
+            }
+            // Fallback (not secure) if SubtleCrypto not available
+            return btoa(password);
+        }
+
+        function getUsers() {
+            try {
+                return JSON.parse(localStorage.getItem('pm_users') || '[]');
+            } catch (e) {
+                return [];
+            }
+        }
+
+        function saveUsers(users) {
+            localStorage.setItem('pm_users', JSON.stringify(users));
+        }
+
+        async function createUser(email, password, role = 'user') {
+            const users = getUsers();
+            if (users.find(u => u.email === email)) throw new Error('User already exists');
+            const hash = await hashPassword(password);
+            const user = { email, passwordHash: hash, role, disabled: false, createdAt: Date.now() };
+            users.push(user);
+            saveUsers(users);
+            return user;
+        }
+
+        function getCurrentUser() {
+            try {
+                return JSON.parse(localStorage.getItem('pm_currentUser') || 'null');
+            } catch (e) {
+                return null;
+            }
+        }
+
+        function setCurrentUser(user) {
+            if (user) localStorage.setItem('pm_currentUser', JSON.stringify(user));
+            else localStorage.removeItem('pm_currentUser');
+            updateAuthUI();
+        }
+
+        function logout() {
+            setCurrentUser(null);
+            alert('U shkyqet.');
+        }
+
+        function updateAuthUI() {
+            const current = getCurrentUser();
+            const loginBtn = document.getElementById('login-btn');
+            const signupBtn = document.getElementById('signup-btn');
+            const logoutBtn = document.getElementById('logout-btn');
+            const adminBtn = document.getElementById('admin-panel-btn');
+
+            if (!loginBtn || !signupBtn || !logoutBtn || !adminBtn) return;
+
+            if (current && current.email) {
+                loginBtn.style.display = 'none';
+                signupBtn.style.display = 'none';
+                logoutBtn.style.display = 'inline-block';
+                if (current.role === 'admin') adminBtn.style.display = 'inline-block';
+                else adminBtn.style.display = 'none';
+            } else {
+                loginBtn.style.display = 'inline-block';
+                signupBtn.style.display = 'inline-block';
+                logoutBtn.style.display = 'none';
+                adminBtn.style.display = 'none';
+            }
+        }
+
+        async function ensureAdminExists() {
+            const adminEmail = 'infopronamix@gmail.com';
+            const adminPassword = 'Pronamix.06.mix';
+            const users = getUsers();
+            if (!users.find(u => u.email === adminEmail && u.role === 'admin')) {
+                try {
+                    await createUser(adminEmail, adminPassword, 'admin');
+                    console.log('Admin user created:', adminEmail);
+                } catch (e) {
+                    console.warn('Could not create admin:', e.message);
+                }
+            }
+        }
+
+        function loadPropertiesFromStorage() {
+            try {
+                const saved = localStorage.getItem('pm_properties');
+                if (saved) return JSON.parse(saved);
+            } catch (e) {}
+
+            const initial = [
+                { id: 1, title: "Apartament i Ri 1+1", price: 95000, city: "Gjilan", type: "Apartament", rooms: 1, bathrooms: 1, size: 65, year: 2022, image: "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80", featured: false },
+                { id: 2, title: "Shtëpi Moderne 3+1", price: 185000, city: "Prishtinë", type: "Shtëpi", rooms: 3, bathrooms: 2, size: 120, year: 2021, image: "https://images.unsplash.com/photo-1568605114967-8130f3a36994?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80", featured: true },
+                { id: 3, title: "Apartament Luksoz 2+1", price: 120000, city: "Prizren", type: "Apartament", rooms: 2, bathrooms: 1, size: 85, year: 2020, image: "https://images.unsplash.com/photo-1513584684374-8bab748fbf90?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80", featured: true },
+                { id: 4, title: "Vilë me Kopsht 4+1", price: 250000, city: "Ferizaj", type: "Vilë", rooms: 4, bathrooms: 3, size: 200, year: 2019, image: "https://images.unsplash.com/photo-1570129477492-45c003edd2be?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80", featured: true },
+                { id: 5, title: "Shtëpi Familjare 3+1", price: 140000, city: "Pejë", type: "Shtëpi", rooms: 3, bathrooms: 2, size: 150, year: 2018, image: "https://images.unsplash.com/photo-1484154218962-a197022b5858?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80", featured: false },
+                { id: 6, title: "Shtëpi e Pavarur 2+1", price: 110000, city: "Mitrovicë", type: "Shtëpi", rooms: 2, bathrooms: 1, size: 100, year: 2017, image: "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80", featured: false },
+                { id: 7, title: "Apartament Premium 3+1", price: 165000, city: "Prishtinë", type: "Apartament", rooms: 3, bathrooms: 2, size: 110, year: 2023, image: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80", featured: true },
+                { id: 8, title: "Shtëpi me Oborr 4+1", price: 220000, city: "Gjakovë", type: "Shtëpi", rooms: 4, bathrooms: 2, size: 180, year: 2016, image: "https://images.unsplash.com/photo-1570129477492-45c003edd2be?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80", featured: false },
+                { id: 9, title: "Apartament i Vogël Studio", price: 75000, city: "Gjilan", type: "Apartament", rooms: 1, bathrooms: 1, size: 45, year: 2021, image: "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80", featured: false },
+                { id: 10, title: "Shtëpi e Re 3+1", price: 160000, city: "Prizren", type: "Shtëpi", rooms: 3, bathrooms: 2, size: 130, year: 2022, image: "https://images.unsplash.com/photo-1568605114967-8130f3a36994?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80", featured: false },
+                { id: 11, title: "Apartament me Pamje 2+1", price: 135000, city: "Prishtinë", type: "Apartament", rooms: 2, bathrooms: 1, size: 75, year: 2020, image: "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80", featured: false },
+                { id: 12, title: "Vilë Luksoze 5+1", price: 320000, city: "Prishtinë", type: "Vilë", rooms: 5, bathrooms: 4, size: 280, year: 2023, image: "https://images.unsplash.com/photo-1570129477492-45c003edd2be?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80", featured: true },
+                { id: 13, title: "Shtëpi Tradicionale 3+1", price: 125000, city: "Prizren", type: "Shtëpi", rooms: 3, bathrooms: 1, size: 110, year: 2015, image: "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80", featured: false },
+                { id: 14, title: "Apartament i Ri 2+1", price: 105000, city: "Ferizaj", type: "Apartament", rooms: 2, bathrooms: 1, size: 70, year: 2021, image: "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80", featured: false },
+                { id: 15, title: "Shtëpi me Garazh 3+1", price: 175000, city: "Gjilan", type: "Shtëpi", rooms: 3, bathrooms: 2, size: 140, year: 2019, image: "https://images.unsplash.com/photo-1568605114967-8130f3a36994?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80", featured: false },
+                { id: 16, title: "Apartament i Vjetër 1+1", price: 65000, city: "Mitrovicë", type: "Apartament", rooms: 1, bathrooms: 1, size: 55, year: 2005, image: "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80", featured: false },
+                { id: 17, title: "Shtëpi e Madhe 4+1", price: 195000, city: "Pejë", type: "Shtëpi", rooms: 4, bathrooms: 2, size: 160, year: 2018, image: "https://images.unsplash.com/photo-1570129477492-45c003edd2be?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80", featured: false },
+                { id: 18, title: "Apartament Qendror 3+1", price: 155000, city: "Prishtinë", type: "Apartament", rooms: 3, bathrooms: 2, size: 95, year: 2022, image: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80", featured: true },
+                { id: 19, title: "Shtëpi me Kopsht 2+1", price: 130000, city: "Gjakovë", type: "Shtëpi", rooms: 2, bathrooms: 1, size: 105, year: 2017, image: "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80", featured: false },
+                { id: 20, title: "Apartament Premium 1+1", price: 85000, city: "Prizren", type: "Apartament", rooms: 1, bathrooms: 1, size: 60, year: 2023, image: "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80", featured: false },
+                { id: 21, title: "Shtëpi e Re 2+1", price: 145000, city: "Ferizaj", type: "Shtëpi", rooms: 2, bathrooms: 1, size: 115, year: 2021, image: "https://images.unsplash.com/photo-1568605114967-8130f3a36994?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80", featured: false },
+                { id: 22, title: "Apartament i Madh 4+1", price: 180000, city: "Prishtinë", type: "Apartament", rooms: 4, bathrooms: 2, size: 125, year: 2020, image: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80", featured: true },
+                { id: 23, title: "Shtëpi me Pishinë 5+1", price: 350000, city: "Prishtinë", type: "Vilë", rooms: 5, bathrooms: 3, size: 300, year: 2023, image: "https://images.unsplash.com/photo-1570129477492-45c003edd2be?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80", featured: true },
+                { id: 24, title: "Apartament i Vogël 1+1", price: 70000, city: "Mitrovicë", type: "Apartament", rooms: 1, bathrooms: 1, size: 50, year: 2019, image: "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80", featured: false }
+            ];
+            try { localStorage.setItem('pm_properties', JSON.stringify(initial)); } catch (e) {}
+            return initial;
+        }
+
+        function savePropertiesToStorage() {
+            try { localStorage.setItem('pm_properties', JSON.stringify(properties)); } catch (e) {}
+        }
+
+        // Load properties (persisted)
+        let properties = loadPropertiesFromStorage();
+
+        // Variabla globale
+        let currentPage = 1;
+        const propertiesPerPage = 9;
+        let filteredProperties = [...properties];
+        let currentSort = 'default';
+
+        // Inicializimi
+        document.addEventListener('DOMContentLoaded', async function() {
+            await ensureAdminExists();
+            updateAuthUI();
+            displayProperties();
+            setupEventListeners();
+            // If no user is logged in, show the entry choice modal so visitors can choose login/signup/guest
+            if (!getCurrentUser()) {
+                showModal('entry-modal');
+            }
+        });
+
+        // Konfigurimi i event listeners
+        function setupEventListeners() {
+            // Mobile menu
+            document.querySelector('.mobile-menu').addEventListener('click', function() {
+                document.querySelector('nav').classList.toggle('active');
+            });
+           
+            // Kërkimi bazë
+            document.getElementById('search-btn').addEventListener('click', performSearch);
+           
+            // Kërkimi i avancuar
+            document.getElementById('toggle-advanced').addEventListener('click', function() {
+                const advancedSearch = document.getElementById('advanced-search');
+                advancedSearch.classList.toggle('active');
+                this.querySelector('span').textContent =
+                    advancedSearch.classList.contains('active') ? '▲' : '▼';
+            });
+           
+            // Renditja
+            document.getElementById('sort-by').addEventListener('change', function() {
+                currentSort = this.value;
+                performSearch();
+            });
+           
+            // Kërkimi automatik kur ndryshojnë filtrat e avancuar
+            document.querySelectorAll('.advanced-filters input, .advanced-filters select').forEach(element => {
+                element.addEventListener('change', performSearch);
+            });
+           
+            // Klikimi në qytetet në footer
+            document.querySelectorAll('.footer-column a[data-city]').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const city = this.getAttribute('data-city');
+                    document.getElementById('city-search').value = city;
+                    performSearch();
+                });
+            });
+
+            // Auth / Admin UI
+            const loginBtn = document.getElementById('login-btn');
+            const signupBtn = document.getElementById('signup-btn');
+            const logoutBtn = document.getElementById('logout-btn');
+            const adminPanelBtn = document.getElementById('admin-panel-btn');
+
+            if (loginBtn) loginBtn.addEventListener('click', () => showModal('login-modal'));
+            if (signupBtn) signupBtn.addEventListener('click', () => showModal('signup-modal'));
+            if (logoutBtn) logoutBtn.addEventListener('click', () => { logout(); });
+            if (adminPanelBtn) adminPanelBtn.addEventListener('click', () => {
+                showModal('admin-modal');
+                renderAdminUsers();
+                renderAdminProperties();
+            });
+
+            // Entry modal buttons (choose mode on entry)
+            const entryLogin = document.getElementById('entry-login');
+            const entrySignup = document.getElementById('entry-signup');
+            const entryGuest = document.getElementById('entry-guest');
+            if (entryLogin) entryLogin.addEventListener('click', () => { document.getElementById('entry-modal').style.display = 'none'; showModal('login-modal'); });
+            if (entrySignup) entrySignup.addEventListener('click', () => { document.getElementById('entry-modal').style.display = 'none'; showModal('signup-modal'); });
+            if (entryGuest) entryGuest.addEventListener('click', () => { document.getElementById('entry-modal').style.display = 'none'; setCurrentUser({ email: 'guest', role: 'guest' }); alert('Jeni hyrë si Vizitor'); });
+
+            // Modal close buttons
+            document.querySelectorAll('#login-modal .modal-close, #signup-modal .modal-close, #admin-modal .modal-close').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const modal = btn.closest('.modal');
+                    if (modal) { modal.style.display = 'none'; document.body.style.overflow = 'auto'; }
+                });
+            });
+
+            // Click outside to close auth/admin modals
+            document.querySelectorAll('#login-modal, #signup-modal, #admin-modal').forEach(modal => {
+                modal.addEventListener('click', (e) => {
+                    if (e.target === modal) { modal.style.display = 'none'; document.body.style.overflow = 'auto'; }
+                });
+            });
+
+            // Login form
+            const loginForm = document.getElementById('login-form');
+            if (loginForm) loginForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const email = document.getElementById('login-email').value.trim().toLowerCase();
+                const password = document.getElementById('login-password').value;
+                const users = getUsers();
+                const user = users.find(u => u.email === email);
+                if (!user) { alert('Përdoruesi nuk ekziston'); return; }
+                if (user.disabled) { alert('Ky përdorues është i ç' + "aktivizuar"); return; }
+                const hash = await hashPassword(password);
+                if (hash === user.passwordHash) {
+                    setCurrentUser({ email: user.email, role: user.role });
+                    document.getElementById('login-modal').style.display = 'none';
+                    document.body.style.overflow = 'auto';
+                    alert('Hyrje e suksesshme');
+                } else {
+                    alert('Fjalëkalim i pasaktë');
+                }
+            });
+
+            // Signup form
+            const signupForm = document.getElementById('signup-form');
+            if (signupForm) signupForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const email = document.getElementById('signup-email').value.trim().toLowerCase();
+                const password = document.getElementById('signup-password').value;
+                const passwordConfirm = document.getElementById('signup-password-confirm').value;
+                if (password !== passwordConfirm) { alert('Fjalëkalimet nuk përputhen'); return; }
+                try {
+                    await createUser(email, password, 'user');
+                    setCurrentUser({ email, role: 'user' });
+                    document.getElementById('signup-modal').style.display = 'none';
+                    document.body.style.overflow = 'auto';
+                    alert('Llogaria u krijua dhe jeni i kyçur');
+                } catch (err) {
+                    alert(err.message || 'Gabim gjatë krijimit të llogarisë');
+                }
+            });
+
+            // Admin add property form
+            const adminAddForm = document.getElementById('admin-add-property-form');
+            if (adminAddForm) adminAddForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const current = getCurrentUser();
+                if (!current || current.role !== 'admin') { alert('Vetëm administratorët mund të shtojnë prona'); return; }
+                const title = document.getElementById('prop-title').value.trim();
+                const price = parseInt(document.getElementById('prop-price').value) || 0;
+                const city = document.getElementById('prop-city').value.trim();
+                const type = document.getElementById('prop-type').value.trim();
+                const rooms = parseInt(document.getElementById('prop-rooms').value) || 0;
+                const bathrooms = parseInt(document.getElementById('prop-bathrooms').value) || 0;
+                const size = parseInt(document.getElementById('prop-size').value) || 0;
+                const year = parseInt(document.getElementById('prop-year').value) || new Date().getFullYear();
+                const image = document.getElementById('prop-image').value.trim();
+                const featured = document.getElementById('prop-featured').checked;
+                const newId = properties.reduce((max, p) => Math.max(max, p.id), 0) + 1;
+                const newProp = { id: newId, title, price, city, type, rooms, bathrooms, size, year, image, featured };
+                properties.push(newProp);
+                savePropertiesToStorage();
+                renderAdminProperties();
+                displayProperties();
+                adminAddForm.reset();
+                alert('Prona u shtua');
+            });
+
+            // Contact form handling: only allow authenticated (non-guest) users to submit
+            const contactForm = document.getElementById('contact-form');
+            if (contactForm) contactForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                // Always open the user's email client with the provided details
+                const name = document.getElementById('contact-name').value.trim();
+                const email = document.getElementById('contact-email').value.trim();
+                const message = document.getElementById('contact-message').value.trim();
+                const recipient = encodeURIComponent('infopronamix@gmail.com');
+                const subject = encodeURIComponent(`Contact from ${name}`);
+                const body = encodeURIComponent(`${message}\n\nFrom: ${name} <${email}>`);
+                window.location.href = `mailto:${recipient}?subject=${subject}&body=${body}`;
+            });
+        }
+
+        // Admin render helpers
+        function renderAdminUsers() {
+            const container = document.getElementById('admin-users-list');
+            if (!container) return;
+            const users = getUsers();
+            const current = getCurrentUser();
+            container.innerHTML = '';
+            users.forEach(u => {
+                const div = document.createElement('div');
+                div.style.display = 'flex';
+                div.style.justifyContent = 'space-between';
+                div.style.alignItems = 'center';
+                div.style.padding = '0.5rem 0';
+                div.innerHTML = `<div>${u.email} <small>(${u.role})</small></div>`;
+                const controls = document.createElement('div');
+                const disableBtn = document.createElement('button');
+                disableBtn.textContent = u.disabled ? 'Aktivizo' : 'Ç' + 'aktivizo';
+                disableBtn.addEventListener('click', () => {
+                    if (current && current.email === u.email) { alert('Nuk mund të ç' + "aktivizoni llogarinë tuaj vetë"); return; }
+                    const users = getUsers();
+                    const idx = users.findIndex(x => x.email === u.email);
+                    if (idx >= 0) { users[idx].disabled = !users[idx].disabled; saveUsers(users); renderAdminUsers(); }
+                });
+                const delBtn = document.createElement('button');
+                delBtn.textContent = 'Fshi';
+                delBtn.style.marginLeft = '0.5rem';
+                delBtn.addEventListener('click', () => {
+                    if (!confirm('Jeni të sigurt që doni ta fshini këtë përdorues?')) return;
+                    const users = getUsers().filter(x => x.email !== u.email);
+                    saveUsers(users);
+                    renderAdminUsers();
+                });
+                controls.appendChild(disableBtn);
+                controls.appendChild(delBtn);
+                div.appendChild(controls);
+                container.appendChild(div);
+            });
+        }
+
+        function renderAdminProperties() {
+            const container = document.getElementById('admin-properties-list');
+            if (!container) return;
+            container.innerHTML = '';
+            properties.slice().reverse().forEach(p => {
+                const row = document.createElement('div');
+                row.style.display = 'flex';
+                row.style.justifyContent = 'space-between';
+                row.style.alignItems = 'center';
+                row.style.padding = '0.4rem 0';
+                row.innerHTML = `<div>${p.title} — ${p.city} — €${p.price.toLocaleString()}</div>`;
+                const btns = document.createElement('div');
+                const del = document.createElement('button');
+                del.textContent = 'Fshi';
+                del.addEventListener('click', () => {
+                    if (!confirm('Fshi pronën?')) return;
+                    const idx = properties.findIndex(x => x.id === p.id);
+                    if (idx >= 0) { properties.splice(idx,1); savePropertiesToStorage(); renderAdminProperties(); displayProperties(); }
+                });
+                btns.appendChild(del);
+                row.appendChild(btns);
+                container.appendChild(row);
+            });
+        }
+
+        // small modal helpers
+        function showModal(id) { const m = document.getElementById(id); if (m) { m.style.display = 'block'; document.body.style.overflow = 'hidden'; } }
+
+        // Funksioni kryesor i kërkimit
+        function performSearch() {
+            const cityFilter = document.getElementById('city-search').value;
+            const typeFilter = document.getElementById('type-search').value;
+            const priceFilter = document.getElementById('price-search').value;
+            const roomsFilter = document.getElementById('rooms').value;
+            const bathroomsFilter = document.getElementById('bathrooms').value;
+            const sizeMinFilter = document.getElementById('size-min').value;
+            const sizeMaxFilter = document.getElementById('size-max').value;
+            const yearFilter = document.getElementById('year').value;
+           
+            // Filtro pronat
+            filteredProperties = properties.filter(property => {
+                // Filtro sipas qytetit
+                if (cityFilter && property.city !== cityFilter) return false;
+               
+                // Filtro sipas llojit
+                if (typeFilter && property.type !== typeFilter) return false;
+               
+                // Filtro sipas çmimit
+                if (priceFilter && property.price > parseInt(priceFilter)) return false;
+               
+                // Filtro sipas numrit të dhomave
+                if (roomsFilter) {
+                    if (roomsFilter === '4' && property.rooms < 4) return false;
+                    if (roomsFilter !== '4' && property.rooms !== parseInt(roomsFilter)) return false;
+                }
+               
+                // Filtro sipas numrit të banjove
+                if (bathroomsFilter) {
+                    if (bathroomsFilter === '3' && property.bathrooms < 3) return false;
+                    if (bathroomsFilter !== '3' && property.bathrooms !== parseInt(bathroomsFilter)) return false;
+                }
+               
+                // Filtro sipas siperfaqes
+                if (sizeMinFilter && property.size < parseInt(sizeMinFilter)) return false;
+                if (sizeMaxFilter && property.size > parseInt(sizeMaxFilter)) return false;
+               
+                // Filtro sipas vitit të ndërtimit
+                if (yearFilter && property.year < parseInt(yearFilter)) return false;
+               
+                return true;
+            });
+           
+            // Rendit pronat
+            sortProperties();
+           
+            // Reset pagination
+            currentPage = 1;
+           
+            // Shfaq rezultatet
+            displayProperties();
+        }
+
+        // Funksioni për renditjen e pronave
+        function sortProperties() {
+            switch(currentSort) {
+                case 'price-asc':
+                    filteredProperties.sort((a, b) => a.price - b.price);
+                    break;
+                case 'price-desc':
+                    filteredProperties.sort((a, b) => b.price - a.price);
+                    break;
+                case 'size-asc':
+                    filteredProperties.sort((a, b) => a.size - b.size);
+                    break;
+                case 'size-desc':
+                    filteredProperties.sort((a, b) => b.size - a.size);
+                    break;
+                default:
+                    // Renditja default (featured first, then by ID)
+                    filteredProperties.sort((a, b) => {
+                        if (a.featured && !b.featured) return -1;
+                        if (!a.featured && b.featured) return 1;
+                        return a.id - b.id;
+                    });
+            }
+        }
+
+        // Funksioni për shfaqjen e pronave
+        function displayProperties() {
+            const propertiesGrid = document.getElementById('properties-grid');
+            const resultsCount = document.getElementById('results-count');
+            const pagination = document.getElementById('pagination');
+           
+            // Update results count
+            resultsCount.textContent = `${filteredProperties.length} prona u gjetën`;
+           
+            // Llogarit pagination
+            const totalPages = Math.ceil(filteredProperties.length / propertiesPerPage);
+            const startIndex = (currentPage - 1) * propertiesPerPage;
+            const endIndex = startIndex + propertiesPerPage;
+            const currentProperties = filteredProperties.slice(startIndex, endIndex);
+           
+            // Pastro grid
+            propertiesGrid.innerHTML = '';
+           
+            // Shfaq pronat
+            if (currentProperties.length === 0) {
+                propertiesGrid.innerHTML = `
+                    <div class="no-results">
+                        <h3>Nuk u gjet asnjë pronë</h3>
+                        <p>Provoni të modifikoni kriteret e kërkimit tuaj</p>
+                    </div>
+                `;
+            } else {
+                currentProperties.forEach(property => {
+                    const propertyCard = document.createElement('div');
+                    propertyCard.className = 'property-card';
+                    propertyCard.setAttribute('data-property', property.id);
+                    propertyCard.innerHTML = `
+                        <div class="property-img-container">
+                            <img src="${property.image}" alt="${property.title}" class="property-img">
+                            ${property.featured ? '<div class="property-badge">Featured</div>' : ''}
+                        </div>
+                        <div class="property-info">
+                            <div class="property-price">€${property.price.toLocaleString()}</div>
+                            <h3 class="property-title">${property.title}</h3>
+                            <div class="property-location">
+                                <i>📍</i> ${property.city}
+                            </div>
+                            <div class="property-features">
+                                <span>${property.rooms} Dhoma</span>
+                                <span>${property.bathrooms} Banjo</span>
+                                <span>${property.size}m²</span>
+                            </div>
+                        </div>
+                    `;
+                    propertyCard.addEventListener('click', () => {
+                        const current = getCurrentUser();
+                        // Only allow logged-in users (role 'user' or 'admin') to open property details
+                        if (!current || current.role === 'guest') {
+                            alert('Duhet të jeni të kyçur për të parë detajet e pronës. Ju lutem hyni ose krijoni një llogari.');
+                            showModal('entry-modal');
+                            return;
+                        }
+                        openPropertyModal(property);
+                    });
+                    propertiesGrid.appendChild(propertyCard);
+                });
+            }
+           
+            // Shfaq pagination
+            displayPagination(totalPages, pagination);
+        }
+
+        // Funksioni për pagination
+        function displayPagination(totalPages, paginationElement) {
+            paginationElement.innerHTML = '';
+           
+            if (totalPages <= 1) return;
+           
+            // Butoni Previous
+            const prevButton = document.createElement('button');
+            prevButton.textContent = '←';
+            prevButton.disabled = currentPage === 1;
+            prevButton.addEventListener('click', () => {
+                if (currentPage > 1) {
+                    currentPage--;
+                    displayProperties();
+                }
+            });
+            paginationElement.appendChild(prevButton);
+           
+            // Butonat e faqeve
+            for (let i = 1; i <= totalPages; i++) {
+                const pageButton = document.createElement('button');
+                pageButton.textContent = i;
+                pageButton.className = currentPage === i ? 'active' : '';
+                pageButton.addEventListener('click', () => {
+                    currentPage = i;
+                    displayProperties();
+                });
+                paginationElement.appendChild(pageButton);
+            }
+           
+            // Butoni Next
+            const nextButton = document.createElement('button');
+            nextButton.textContent = '→';
+            nextButton.disabled = currentPage === totalPages;
+            nextButton.addEventListener('click', () => {
+                if (currentPage < totalPages) {
+                    currentPage++;
+                    displayProperties();
+                }
+            });
+            paginationElement.appendChild(nextButton);
+        }
+
+        // Funksioni për hapjen e modalit të pronës
+        function openPropertyModal(property) {
+            // Krijo modal dinamikisht
+            const modalId = `property-modal-${property.id}`;
+            let modal = document.getElementById(modalId);
+           
+            if (!modal) {
+                modal = document.createElement('div');
+                modal.id = modalId;
+                modal.className = 'modal';
+                modal.innerHTML = `
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <img src="${property.image.replace('600', '1000')}" alt="${property.title}" class="modal-img">
+                            <button class="modal-close">&times;</button>
+                        </div>
+                        <div class="modal-body">
+                            <h2 class="modal-title">${property.title}</h2>
+                            <div class="modal-price">€${property.price.toLocaleString()}</div>
+                           
+                            <div class="modal-details">
+                                <div class="detail-item">
+                                    <div class="detail-icon">📍</div>
+                                    <div class="detail-text">
+                                        <h4>Lokacioni</h4>
+                                        <p>${property.city}</p>
+                                    </div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-icon">🏠</div>
+                                    <div class="detail-text">
+                                        <h4>Tipi i Pronës</h4>
+                                        <p>${property.type}</p>
+                                    </div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-icon">📐</div>
+                                    <div class="detail-text">
+                                        <h4>Siperfaqja</h4>
+                                        <p>${property.size} m²</p>
+                                    </div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-icon">🛏️</div>
+                                    <div class="detail-text">
+                                        <h4>Dhoma</h4>
+                                        <p>${property.rooms} Dhoma gjumi</p>
+                                    </div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-icon">🚿</div>
+                                    <div class="detail-text">
+                                        <h4>Banjo</h4>
+                                        <p>${property.bathrooms} Banjo</p>
+                                    </div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-icon">📅</div>
+                                    <div class="detail-text">
+                                        <h4>Viti i Ndërtimit</h4>
+                                        <p>${property.year}</p>
+                                    </div>
+                                </div>
+                            </div>
+                           
+                            <div class="modal-description">
+                                <h3>Përshkrimi i Pronës</h3>
+                                <p>Kjo pronë e shkëlqyer ndodhet në ${property.city} dhe ofron ${property.rooms} dhoma gjumi, ${property.bathrooms} banjo dhe një siperfaqe totale prej ${property.size}m². Prona është e ndërtuar në vitin ${property.year} dhe ofron të gjitha modernitetet për një jetesë të rehatshme.</p>
+                                <p>Lokacioni është shumë i favorshëm, afër shërbimeve themelore si shkolla, spitale, dyqane dhe zona argëtuese. Kjo është një mundësi e shkëlqyer për të blerë një pronë cilësore me çmim konkurrues.</p>
+                            </div>
+                           
+                            <div class="modal-contact">
+                                <h3>Kontakto për më shumë informacion</h3>
+                                <p>📞 +383 45 643 303</p>
+                                <p>✉️ <a href="mailto:infopronamix@gmail.com?subject=PronaMix%20Inquiry">infopronamix@gmail.com</a></p>
+                                <button class="contact-btn">Kontakto Tani</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                document.body.appendChild(modal);
+               
+                // Shto event listeners për modal
+                modal.querySelector('.modal-close').addEventListener('click', () => {
+                    modal.style.display = 'none';
+                    document.body.style.overflow = 'auto';
+                });
+               
+                modal.querySelector('.contact-btn').addEventListener('click', async () => {
+                    // Open user's email client with a short, pre-filled message that includes property name
+                    const recipient = encodeURIComponent('infopronamix@gmail.com');
+                    const subject = encodeURIComponent(`Inquiry: ${property.title}`);
+                    const bodyText = `Hello, I’m interested in the property ${property.title}. Could we discuss it further?`;
+                    const body = encodeURIComponent(bodyText);
+                    window.location.href = `mailto:${recipient}?subject=${subject}&body=${body}`;
+                });
+               
+                // Mbylle modal kur klikohet jashtë
+                modal.addEventListener('click', (e) => {
+                    if (e.target === modal) {
+                        modal.style.display = 'none';
+                        document.body.style.overflow = 'auto';
+                    }
+                });
+            }
+           
+            // Shfaq modal
+            modal.style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Accordion functionality for About section
+        const accordionHeaders = document.querySelectorAll('.accordion-header');
+       
+        accordionHeaders.forEach(header => {
+            header.addEventListener('click', function() {
+                const accordionItem = this.parentElement;
+                const accordionContent = this.nextElementSibling;
+               
+                // Close all other accordion items
+                document.querySelectorAll('.accordion-item').forEach(item => {
+                    if (item !== accordionItem) {
+                        item.classList.remove('active');
+                        item.querySelector('.accordion-content').classList.remove('active');
+                    }
+                });
+               
+                // Toggle current accordion item
+                accordionItem.classList.toggle('active');
+                accordionContent.classList.toggle('active');
+            });
+        });
+    </script>
+</body>
+</html>
